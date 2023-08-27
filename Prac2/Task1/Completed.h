@@ -8,7 +8,7 @@ class Completed: public SmartContractState
 private:
     /* data */
 public:
-    Completed(/* args */);
+    Completed(SmartContract*);
     ~Completed();
 };
 #endif // COMPLETED_H

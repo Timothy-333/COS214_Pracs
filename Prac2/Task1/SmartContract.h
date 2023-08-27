@@ -20,6 +20,12 @@ private:
     SmartContractState* completedState;
 public:
     SmartContract(/* args */);
+    void add();
+    void remove();
+    void accept();
+    void reject();
+    void complete();
+    void setState(SmartContractState* state);
     ~SmartContract();
 };
 #endif // SMARTCONTRACTSTATE_H

@@ -6,14 +6,16 @@
 #include "Accepted.h"
 #include "Rejected.h"
 #include "Completed.h"
+#include "SmartContract.h"
 using namespace std;
 
 int main()
 {
-    SmartContractState* negotiation = new Negotiation();
-    SmartContractState* tentativelyAccepted = new TentativelyAccepted();
-    SmartContractState* accepted = new Accepted();
-    SmartContractState* rejected = new Rejected();
-    SmartContractState* completed = new Completed();
+    SmartContract* smartContract = new SmartContract();
+    SmartContractState* negotiation = new Negotiation(smartContract);
+    SmartContractState* tentativelyAccepted = new TentativelyAccepted(smartContract);
+    SmartContractState* accepted = new Accepted(smartContract);
+    SmartContractState* rejected = new Rejected(smartContract);
+    SmartContractState* completed = new Completed(smartContract);
     return 0;
 }

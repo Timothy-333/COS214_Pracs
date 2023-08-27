@@ -8,7 +8,7 @@ class Rejected: public SmartContractState
 private:
     /* data */
 public:
-    Rejected(/* args */);
+    Rejected(SmartContract*);
     ~Rejected();
 };
 #endif // REJECTED_H
