@@ -1,26 +1,36 @@
 #include "accepted.h"
-Accepted::Accepted(SmartContract* smartContract) : SmartContractState(smartContract)
+Accepted::Accepted(SmartContract* smartContract, vector<string>* conditions, vector<string>* aggreeingParties, int numParties) : SmartContractState(smartContract, conditions, aggreeingParties, numParties)
 {
+    this->stateName = "Accepted";
 }
-void Accepted::add()
+void Accepted::add(string condition)
 {
-    cout << "Accepted: add" << endl;
+    throw "Contract is already accepted.";
 }
-void Accepted::remove()
+void Accepted::remove(string condition)
 {
-    cout << "Accepted: remove" << endl;
+    throw "Contract is already accepted.";
 }
-void Accepted::accept()
+void Accepted::accept(string party)
 {
-    cout << "Accepted: accept" << endl;
+    throw "Contract is already accepted.";
 }
 void Accepted::reject()
 {
-    cout << "Accepted: reject" << endl;
+    throw "Contract is already accepted.";
 }
-void Accepted::complete()
+void Accepted::complete(string party)
 {
-    cout << "Accepted: complete" << endl;
+    auto iter = find(aggreeingParties->begin(), aggreeingParties->end(), party);
+    if (iter != aggreeingParties->end()) {
+        *iter = *iter + " (completed)";
+    }
+    else {
+        throw "Party not found or has already completed";
+    }
+    if (all_of(aggreeingParties->begin(), aggreeingParties->end(), [](string s) {return s.find(" (completed)") != string::npos; })) {
+        smartContract->setState(smartContract->completedState);
+    }
 }
 Accepted::~Accepted()
 {

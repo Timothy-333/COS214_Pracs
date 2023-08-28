@@ -8,7 +8,7 @@ class Completed: public SmartContractState
 private:
     /* data */
 public:
-    Completed(SmartContract*);
+    Completed(SmartContract*, vector<string>*, vector<string>*, int);
     ~Completed();
 };
 #endif // COMPLETED_H

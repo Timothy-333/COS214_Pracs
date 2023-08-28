@@ -2,30 +2,32 @@
 #define SMARTCONTRACT_H
 #include <iostream>
 #include <string>
-#include "SmartContractState.h"
-#include "Negotiation.h"
-#include "TentativelyAccepted.h"
-#include "Accepted.h"
-#include "Rejected.h"
-#include "Completed.h"
+#include <vector>
+class SmartContractState;
 using namespace std;
 class SmartContract
 {
 private:
+    vector<string>* conditions;
+    vector<string>* aggreeingParties;
+    string name;
+    int numParties;
+public:
+    SmartContract(string, int, vector<string>*, vector<string>*);
+    void add(string);
+    void remove(string);
+    void accept(string);
+    void reject();
+    void complete();
+    void complete(string);
+    void setState(SmartContractState* state);
+    void toString();
+    ~SmartContract();
     SmartContractState* currentState;
     SmartContractState* negotiationState;
     SmartContractState* tentativelyAcceptedState;
     SmartContractState* acceptedState;
     SmartContractState* rejectedState;
     SmartContractState* completedState;
-public:
-    SmartContract(/* args */);
-    void add();
-    void remove();
-    void accept();
-    void reject();
-    void complete();
-    void setState(SmartContractState* state);
-    ~SmartContract();
 };
 #endif // SMARTCONTRACTSTATE_H

@@ -1,27 +1,35 @@
 #include "Negotiation.h"
-Negotiation::Negotiation(SmartContract* smartContract) : SmartContractState(smartContract)
+Negotiation::Negotiation(SmartContract* smartContract, vector<string>* conditions, vector<string>* aggreeingParties, int numParties) : SmartContractState(smartContract, conditions, aggreeingParties, numParties)
 {
+    this->stateName = "Negotiation";
 }
 Negotiation::~Negotiation()
 {
 }
-void Negotiation::add()
+void Negotiation::add(string condition)
 {
-    cout << "Negotiation: add" << endl;
+    conditions->push_back(condition);
 }
-void Negotiation::remove()
+void Negotiation::remove(string condition)
 {
-    cout << "Negotiation: remove" << endl;
+    auto iter = find(conditions->begin(), conditions->end(), condition);
+    if (iter != conditions->end()) {
+        conditions->erase(iter);
+    }
+    else {
+        throw "Condition not found";
+    }
 }
-void Negotiation::accept()
+void Negotiation::accept(string party)
 {
-    cout << "Negotiation: accept" << endl;
+    aggreeingParties->push_back(party);
+    smartContract->setState(smartContract->tentativelyAcceptedState);
 }
 void Negotiation::reject()
 {
-    cout << "Negotiation: reject" << endl;
+    smartContract->setState(smartContract->rejectedState);
 }
 void Negotiation::complete()
 {
-    cout << "Negotiation: complete" << endl;
+        throw "Only accepted contracts can complete";
 }

@@ -1,11 +1,20 @@
 #include "SmartContract.h"
-SmartContract::SmartContract(/* args */)
+#include "Negotiation.h"
+#include "TentativelyAccepted.h"
+#include "Accepted.h"
+#include "Rejected.h"
+#include "Completed.h"
+SmartContract::SmartContract(string name, int numParties, vector<string>* conditions, vector<string>* aggreeingParties)
 {
-    acceptedState = new Accepted(this);
-    negotiationState = new Negotiation(this);
-    tentativelyAcceptedState = new TentativelyAccepted(this);
-    rejectedState = new Rejected(this);
-    completedState = new Completed(this);
+    this->name = name;
+    this->numParties = numParties;
+    this->conditions = conditions;
+    this->aggreeingParties = aggreeingParties;
+    acceptedState = new Accepted(this, conditions, aggreeingParties, numParties);
+    negotiationState = new Negotiation(this, conditions, aggreeingParties, numParties);
+    tentativelyAcceptedState = new TentativelyAccepted(this, conditions, aggreeingParties, numParties);
+    rejectedState = new Rejected(this, conditions, aggreeingParties, numParties);
+    completedState = new Completed(this, conditions, aggreeingParties, numParties);
 
     currentState = negotiationState;
 }
@@ -13,25 +22,92 @@ void SmartContract::setState(SmartContractState* state)
 {
     currentState = state;
 }
-void SmartContract::add()
+void SmartContract::add(string condition)
 {
-    currentState->add();
+    try
+    {
+        currentState->add(condition);
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
+    
 }
-void SmartContract::remove()
+void SmartContract::remove(string condition)
 {
-    currentState->remove();
+    try
+    {
+        currentState->remove(condition);
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
 }
-void SmartContract::accept()
+void SmartContract::accept(string party)
 {
-    currentState->accept();
+    try
+    {
+        currentState->accept(party);
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
+    
 }
 void SmartContract::reject()
 {
-    currentState->reject();
+    try
+    {
+        currentState->reject();
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
+    
 }
 void SmartContract::complete()
 {
-    currentState->complete();
+    try
+    {
+        currentState->complete();
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
+}
+void SmartContract::complete(string party)
+{
+    try
+    {
+        currentState->complete(party);
+    }
+    catch(const char* e)
+    {
+        cout << e << endl;
+    }
+}
+void SmartContract::toString()
+{
+    cout << "Contract " << name << endl;
+    cout << "\tState: "<< currentState->stateName << endl;
+    if(currentState == tentativelyAcceptedState || currentState == acceptedState)
+    {
+        cout << "\tVotes: \n";
+        for (const auto& party : *aggreeingParties)
+        {
+            cout << "\t\t" << party << endl;
+        }
+    }
+    cout << "\tConditions: \n";
+    for (const auto& condition : *conditions)
+    {
+        cout << "\t\t" << condition << endl;
+    }
 }
 SmartContract::~SmartContract()
 {

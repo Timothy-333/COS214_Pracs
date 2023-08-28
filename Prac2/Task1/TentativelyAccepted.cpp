@@ -1,26 +1,35 @@
 #include "TentativelyAccepted.h"
-TentativelyAccepted::TentativelyAccepted(SmartContract* smartContract) : SmartContractState(smartContract)
+TentativelyAccepted::TentativelyAccepted(SmartContract* smartContract, vector<string>* conditions, vector<string>* aggreeingParties, int numParties) : SmartContractState( smartContract, conditions, aggreeingParties, numParties)
 {
+    this->stateName = "TentativelyAccepted";
 }
-void TentativelyAccepted::add()
+void TentativelyAccepted::add(string condition)
 {
-    cout << "TentativelyAccepted: add" << endl;
+    aggreeingParties->clear();
+    smartContract->setState(smartContract->negotiationState);
+    smartContract->add(condition);
 }
-void TentativelyAccepted::remove()
+void TentativelyAccepted::remove(string condition)
 {
-    cout << "TentativelyAccepted: remove" << endl;
+    aggreeingParties->clear();
+    smartContract->setState(smartContract->negotiationState);
+    smartContract->remove(condition);
 }
-void TentativelyAccepted::accept()
+void TentativelyAccepted::accept(string party)
 {
-    cout << "TentativelyAccepted: accept" << endl;
+    aggreeingParties->push_back(party);
+    if (aggreeingParties->size() >= numParties)
+    {
+        smartContract->setState(smartContract->acceptedState);
+    }
 }
 void TentativelyAccepted::reject()
 {
-    cout << "TentativelyAccepted: reject" << endl;
+    smartContract->setState(smartContract->rejectedState);
 }
 void TentativelyAccepted::complete()
 {
-    cout << "TentativelyAccepted: complete" << endl;
+    throw "Only accepted contracts can complete";
 }
 TentativelyAccepted::~TentativelyAccepted()
 {
