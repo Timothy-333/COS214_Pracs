@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "testable.h"
+#include "testBed.h"
 using namespace std;
 class TestDecorator : public Testable
 {
@@ -10,7 +11,7 @@ class TestDecorator : public Testable
         Testable* internalTestBed;
     public:
         TestDecorator(Testable*);
-        Testable* getInternalTestBed();
+        TestBed* getInternalTestBed();
         void setInternalTestBed(Testable*);
         virtual bool runTest();
 };

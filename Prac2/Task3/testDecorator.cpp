@@ -3,9 +3,9 @@ TestDecorator::TestDecorator(Testable* internalTestBed)
 {
     this->internalTestBed = internalTestBed;
 }
-Testable* TestDecorator::getInternalTestBed()
+TestBed* TestDecorator::getInternalTestBed()
 {
-    return internalTestBed;
+    return (TestBed*)internalTestBed;
 }
 void TestDecorator::setInternalTestBed(Testable* internalTestBed)
 {
