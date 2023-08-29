@@ -1,2 +1,2 @@
-I have extended the uml by making both testDecorator use testable instead of testBed as its internal testBed.
+I have extended the uml by making testDecorator use testable instead of testBed (testBed using testable interface) as its internal testBed.
 This is just an interface for the testBed but allows the use of testbed and testdecorator synonymously.
