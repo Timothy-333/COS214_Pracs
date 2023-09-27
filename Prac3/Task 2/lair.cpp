@@ -192,3 +192,81 @@ void lair::AddTrap(int x, int y, string Type, int Damage, int Cost)
     cout << "Trap Added at position: (" << x << ", " << y << ")" << endl;
     this->board[x][y] = new Traps(Type, Damage, Cost);
 }
+void lair::DFTraversal(int x, int y)
+{
+    if (x < 0 || x > 9 || y < 0 || y > 9)
+    {
+        cout << "Bounds Reached" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "X")
+    {
+        cout << "Treasure Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "PT")
+    {
+        cout << "Poison Trap Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "FT")
+    {
+        cout << "Fire Trap Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == " ")
+    {
+        cout << "Moving Forward" << endl;
+        return;
+    }
+
+    cout << "Tile Found" << endl;
+    this->board[x][y] = new Traps(" ", 0, 0);
+    DFTraversal(x - 1, y);
+    DFTraversal(x + 1, y);
+    DFTraversal(x, y - 1);
+    DFTraversal(x, y + 1);
+}
+void lair::BFTraversal(int x, int y)
+{
+    if (x < 0 || x > 9 || y < 0 || y > 9)
+    {
+        cout << "Bounds Reached" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "X")
+    {
+        cout << "Treasure Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "PT")
+    {
+        cout << "Poison Trap Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == "FT")
+    {
+        cout << "Fire Trap Found" << endl;
+        return;
+    }
+
+    if (this->board[x][y]->getType() == " ")
+    {
+        cout << "Moving Forward" << endl;
+        return;
+    }
+
+    cout << "Tile Found" << endl;
+    this->board[x][y] = new Traps(" ", 0, 0);
+    BFTraversal(x, y + 1);
+    BFTraversal(x, y - 1);
+    BFTraversal(x + 1, y);
+    BFTraversal(x - 1, y);
+}

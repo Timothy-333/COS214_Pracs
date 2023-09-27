@@ -85,4 +85,6 @@ void engine::setupPhase()
             break;
         }
     }
+    myLair->DFTraversal(0, 1);
+    myLair->BFTraversal(0, 1);
 }

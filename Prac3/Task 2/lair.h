@@ -18,6 +18,8 @@ public:
     int checkTilesConnection(int, int);
     void displayTile(int, int);
     void AddTreasure(int, int);
+    void DFTraversal(int, int);
+    void BFTraversal(int, int);
 private:
     Traps *board[10][10];
     bool treasureAdded;
