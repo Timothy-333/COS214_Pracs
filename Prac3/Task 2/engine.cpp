@@ -2,23 +2,7 @@
 
 engine::engine()
 {
-    myLair = new lair();
-    myLair->createTile(0, 1);
-    myLair->createTile(0, 2);
-    myLair->createTile(0, 3);
-    myLair->createTile(0, 4);
-    myLair->createTile(0, 5);
-    myLair->createTile(1, 5);
-    myLair->createTile(2, 5);
-    myLair->createTile(3, 5);
-    myLair->createTile(4, 5);
-    myLair->createTile(5, 5);
-
-    myLair->AddTrap(0, 3, "FT", 10, 10);
-    myLair->AddTrap(2, 5, "PT", 2, 5);
-
-    myLair->AddTreasure(5, 5);
-
+    createLair();
     myBank = new bank(50);
     menu = new Menu();
     myStoryteller = new storyteller();
@@ -85,6 +69,30 @@ void engine::setupPhase()
             break;
         }
     }
-    myLair->DFTraversal(0, 1);
-    myLair->BFTraversal(0, 1);
+    Hero hero = Hero("Legend",100);
+    myLair->displayBoard();
+    myLair->DFTraversal(0, 1, hero);
+    createLair();
+    myLair->displayBoard();
+    myLair->BFTraversal(0, 1, hero);
+}
+lair *engine::createLair()
+{
+    myLair = new lair();
+    myLair->createTile(0, 1);
+    myLair->createTile(0, 2);
+    myLair->createTile(0, 3);
+    myLair->createTile(0, 4);
+    myLair->createTile(0, 5);
+    myLair->createTile(1, 5);
+    myLair->createTile(2, 5);
+    myLair->createTile(3, 5);
+    myLair->createTile(4, 5);
+    myLair->createTile(5, 5);
+
+    myLair->AddTrap(0, 3, "FT", 10, 10);
+    myLair->AddTrap(2, 5, "PT", 2, 5);
+
+    myLair->AddTreasure(5, 5);
+    return myLair;
 }

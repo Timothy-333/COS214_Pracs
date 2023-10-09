@@ -2,6 +2,7 @@
 
 lair::lair()
 {
+    gameFinished = false;
     cout << "Blank Lair Created" << endl;
     for (int i = 0; i < 10; i++)
     {
@@ -192,8 +193,13 @@ void lair::AddTrap(int x, int y, string Type, int Damage, int Cost)
     cout << "Trap Added at position: (" << x << ", " << y << ")" << endl;
     this->board[x][y] = new Traps(Type, Damage, Cost);
 }
-void lair::DFTraversal(int x, int y)
+void lair::DFTraversal(int x, int y, Hero hero)
 {
+    if (gameFinished)
+    {
+        return;
+    }
+    cout << "Moving" << endl;
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
         cout << "Bounds Reached" << endl;
@@ -203,36 +209,48 @@ void lair::DFTraversal(int x, int y)
     if (this->board[x][y]->getType() == "X")
     {
         cout << "Treasure Found" << endl;
+        gameFinished = true;
         return;
     }
 
     if (this->board[x][y]->getType() == "PT")
     {
         cout << "Poison Trap Found" << endl;
-        return;
+        hero.setHealth(hero.getHealth() - 5);
+        cout << hero.getName() << " Took 5 Damage" << endl;
     }
 
     if (this->board[x][y]->getType() == "FT")
     {
         cout << "Fire Trap Found" << endl;
-        return;
+        hero.setHealth(hero.getHealth() - 10);
+        cout << hero.getName() << " Took 10 Damage" << endl;
     }
 
     if (this->board[x][y]->getType() == " ")
     {
-        cout << "Moving Forward" << endl;
         return;
     }
+    if(hero.getHealth() <= 0)
+    {
+        cout << hero.getName() << " Is Dead" << endl;
+        gameFinished = true;
+    }
 
-    cout << "Tile Found" << endl;
     this->board[x][y] = new Traps(" ", 0, 0);
-    DFTraversal(x - 1, y);
-    DFTraversal(x + 1, y);
-    DFTraversal(x, y - 1);
-    DFTraversal(x, y + 1);
+    DFTraversal(x - 1, y, hero);
+    DFTraversal(x + 1, y, hero);
+    DFTraversal(x, y - 1, hero);
+    DFTraversal(x, y + 1, hero);
 }
-void lair::BFTraversal(int x, int y)
+void lair::BFTraversal(int x, int y, Hero hero)
 {
+    if (gameFinished)
+    {
+        return;
+    }
+    
+    cout << "Moving" << endl;
     if (x < 0 || x > 9 || y < 0 || y > 9)
     {
         cout << "Bounds Reached" << endl;
@@ -242,31 +260,35 @@ void lair::BFTraversal(int x, int y)
     if (this->board[x][y]->getType() == "X")
     {
         cout << "Treasure Found" << endl;
+        gameFinished = true;
         return;
     }
 
     if (this->board[x][y]->getType() == "PT")
     {
         cout << "Poison Trap Found" << endl;
-        return;
+        hero.setHealth(hero.getHealth() - 5);
+        cout << hero.getName() << " Took 5 Damage" << endl;
     }
 
     if (this->board[x][y]->getType() == "FT")
     {
         cout << "Fire Trap Found" << endl;
-        return;
+        hero.setHealth(hero.getHealth() - 10);
+        cout << hero.getName() << " Took 10 Damage" << endl;
     }
-
     if (this->board[x][y]->getType() == " ")
     {
-        cout << "Moving Forward" << endl;
         return;
     }
-
-    cout << "Tile Found" << endl;
+    if(hero.getHealth() <= 0)
+    {
+        cout << hero.getName() << " Is Dead" << endl;
+        gameFinished = true;
+    }
     this->board[x][y] = new Traps(" ", 0, 0);
-    BFTraversal(x, y + 1);
-    BFTraversal(x, y - 1);
-    BFTraversal(x + 1, y);
-    BFTraversal(x - 1, y);
+    BFTraversal(x, y + 1, hero);
+    BFTraversal(x, y - 1, hero);
+    BFTraversal(x + 1, y, hero);
+    BFTraversal(x - 1, y, hero);
 }

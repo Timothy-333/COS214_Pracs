@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include "Traps.h"
-
+#include "hero.h"
 
 using namespace std;
 
@@ -18,9 +18,10 @@ public:
     int checkTilesConnection(int, int);
     void displayTile(int, int);
     void AddTreasure(int, int);
-    void DFTraversal(int, int);
-    void BFTraversal(int, int);
+    void DFTraversal(int, int, Hero);
+    void BFTraversal(int, int, Hero);
 private:
+    bool gameFinished;
     Traps *board[10][10];
     bool treasureAdded;
 };

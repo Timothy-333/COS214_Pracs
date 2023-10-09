@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++23
+CFLAGS = -std=c++11
 
 all: main run clean
 

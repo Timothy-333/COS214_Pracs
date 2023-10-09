@@ -16,6 +16,7 @@ class engine {
 public:
     engine();
     void setupPhase();
+    lair* createLair();
 private:
     int choice;
     int numTraps;
